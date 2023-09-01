@@ -1,0 +1,19 @@
+{
+  "name": "composable-icon",
+  "version": "0.1.0",
+  "description": "Compose svg icons on the fly",
+  "authors": [
+    "LeKoala"
+  ],
+  "keywords": [
+    "DOM",
+    "icons",
+    "icon",
+    "custom",
+    "element",
+    "component",
+    "composable",
+    "es6"
+  ],
+  "main": "composable-icon.js"
+}

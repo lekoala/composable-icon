@@ -1,0 +1,17 @@
+  /* We need this to avoid layout shift since our icons are created dynamically */
+  c-i {
+      --ci-size: 24px;
+      /* Custom elements are display: inline by default */
+      display: inline-block;
+      line-height: 0;
+      width: var(--ci-size);
+      height: var(--ci-size);
+  }
+
+  /* Create any size you expect to use so that layout can be defined in advance */
+  c-i[size="16"] {
+      --ci-size: 16px;
+  }
+  c-i[size="36"] {
+      --ci-size: 36px;
+  }

@@ -1,0 +1,31 @@
+{
+  "name": "composable-icon",
+  "version": "0.1.0",
+  "description": "Compose svg icons on the fly",
+  "main": "composable-icon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild --bundle --minify --format=iife composable-icon.js --outfile=composable-icon.min.js",
+    "build-min": "npm run build && git add -A && git commit -m \"build files\"",
+    "start": "npm run build -- --servedir=.",
+    "watch": "npm run build -- --watch",
+    "bump": "npm run build-min && npm version patch",
+    "jsdoc": "npx jsdoc-to-markdown composable-icon.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lekoala/composable-icon"
+  },
+  "keywords": [
+    "DOM",
+    "icons",
+    "icon",
+    "custom",
+    "element",
+    "component",
+    "composable",
+    "es6"
+  ],
+  "author": "LeKoala",
+  "license": "MIT"
+}
