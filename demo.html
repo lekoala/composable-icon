@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Composable Icon Demo</title>
   <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%220%22 fill=%22%234a90e2%22%3E%3C/rect%3E%3Cpath fill=%22%23fff%22 d=%22M57.70 79.52L24.40 79.52L24.40 20.48L31.87 20.48L31.87 73.13L57.70 73.13L57.70 79.52ZM75.60 79.52L68.13 79.52L68.13 20.48L75.60 20.48L75.60 79.52Z%22%3E%3C/path%3E%3C/svg%3E" />
-
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%237d6ee7%22></rect><path fill=%22%23fff%22 d=%22M61.34 68.92L61.34 68.92Q62.06 68.92 62.64 69.51L62.64 69.51L66.06 73.24Q62.10 77.83 56.46 80.40Q50.81 82.96 42.84 82.96L42.84 82.96Q35.87 82.96 30.20 80.56Q24.53 78.15 20.52 73.81Q16.52 69.46 14.31 63.39Q12.11 57.31 12.11 50.02L12.11 50.02Q12.11 42.73 14.47 36.66Q16.84 30.58 21.11 26.22Q25.38 21.85 31.35 19.45Q37.31 17.04 44.51 17.04L44.51 17.04Q51.62 17.04 56.77 19.24Q61.92 21.45 65.93 25.23L65.93 25.23L63.09 29.23Q62.78 29.68 62.38 29.98Q61.97 30.27 61.20 30.27L61.20 30.27Q60.62 30.27 59.97 29.84Q59.31 29.41 58.41 28.78Q57.52 28.15 56.30 27.43Q55.08 26.71 53.42 26.08Q51.75 25.45 49.55 25.03Q47.34 24.60 44.47 24.60L44.47 24.60Q39.29 24.60 34.99 26.38Q30.69 28.15 27.59 31.44Q24.48 34.72 22.75 39.45Q21.02 44.17 21.02 50.02L21.02 50.02Q21.02 56.05 22.75 60.78Q24.48 65.50 27.48 68.77Q30.47 72.03 34.56 73.74Q38.66 75.45 43.38 75.45L43.38 75.45Q46.27 75.45 48.56 75.11Q50.86 74.77 52.81 74.05Q54.77 73.33 56.46 72.23Q58.14 71.13 59.85 69.60L59.85 69.60Q60.62 68.92 61.34 68.92ZM87.89 17.76L87.89 82.24L79.16 82.24L79.16 17.76L87.89 17.76Z%22></path></svg>" />
   <script src="composable-icon.min.js"></script>
   <script>
     customElements.whenDefined("c-i").then(() => {
@@ -23,7 +22,7 @@
       color: red;
     }
 
-    c-i {
+    .demo c-i {
       border: 1px solid #ccc;
     }
 
@@ -31,31 +30,62 @@
       background: #222;
       color: #eee;
     }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    button c-i {
+      --ci-size: 1.5em;
+    }
+
+    button c-i+span {
+      margin-left: 0.5ch;
+    }
+
+    .one button c-i {
+      --ci-size: 1em;
+    }
+
+    .flex {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .flex>* {
+      margin-right: 1rem;
+    }
   </style>
 </head>
 
 <body>
   <header>
     <h1>
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 100 100">
-        <rect width="100" height="100" rx="0" fill="#4a90e2"></rect>
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 100 100">
+        <rect width="100" height="100" rx="20" fill="#7d6ee7"></rect>
         <path fill="#fff"
-          d="M57.70 79.52L24.40 79.52L24.40 20.48L31.87 20.48L31.87 73.13L57.70 73.13L57.70 79.52ZM75.60 79.52L68.13 79.52L68.13 20.48L75.60 20.48L75.60 79.52Z">
+          d="M61.34 68.92L61.34 68.92Q62.06 68.92 62.64 69.51L62.64 69.51L66.06 73.24Q62.10 77.83 56.46 80.40Q50.81 82.96 42.84 82.96L42.84 82.96Q35.87 82.96 30.20 80.56Q24.53 78.15 20.52 73.81Q16.52 69.46 14.31 63.39Q12.11 57.31 12.11 50.02L12.11 50.02Q12.11 42.73 14.47 36.66Q16.84 30.58 21.11 26.22Q25.38 21.85 31.35 19.45Q37.31 17.04 44.51 17.04L44.51 17.04Q51.62 17.04 56.77 19.24Q61.92 21.45 65.93 25.23L65.93 25.23L63.09 29.23Q62.78 29.68 62.38 29.98Q61.97 30.27 61.20 30.27L61.20 30.27Q60.62 30.27 59.97 29.84Q59.31 29.41 58.41 28.78Q57.52 28.15 56.30 27.43Q55.08 26.71 53.42 26.08Q51.75 25.45 49.55 25.03Q47.34 24.60 44.47 24.60L44.47 24.60Q39.29 24.60 34.99 26.38Q30.69 28.15 27.59 31.44Q24.48 34.72 22.75 39.45Q21.02 44.17 21.02 50.02L21.02 50.02Q21.02 56.05 22.75 60.78Q24.48 65.50 27.48 68.77Q30.47 72.03 34.56 73.74Q38.66 75.45 43.38 75.45L43.38 75.45Q46.27 75.45 48.56 75.11Q50.86 74.77 52.81 74.05Q54.77 73.33 56.46 72.23Q58.14 71.13 59.85 69.60L59.85 69.60Q60.62 68.92 61.34 68.92ZM87.89 17.76L87.89 82.24L79.16 82.24L79.16 17.76L87.89 17.76Z">
         </path>
       </svg>
       Composable Icon
     </h1>
-    <p><em>One custom icon element to rule them all</em></p>
+    <p><em>Compose svg icons on the fly"</em></p>
   </header>
   <main>
     <h2>Frames</h2>
     <p>Our element</p>
-    <c-i v="alert square"></c-i>
-    <c-i v="alert rsquare"></c-i>
-    <c-i v="alert triangle"></c-i>
-    <c-i v="alert hexagon"></c-i>
-    <c-i v="alert circle"></c-i>
-    <span class="red"><c-i v="alert circle"></c-i></span>
+    <div class="demo">
+      <c-i v="alert square"></c-i>
+      <c-i v="alert rsquare"></c-i>
+      <c-i v="alert triangle"></c-i>
+      <c-i v="alert hexagon"></c-i>
+      <c-i v="alert circle"></c-i>
+      <c-i v="alert tag"></c-i>
+      <span class="red"><c-i v="alert circle"></c-i></span>
+    </div>
     <p>Regular svg</p>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none"
       stroke-linecap="round" stroke-linejoin="round">
@@ -68,8 +98,10 @@
     <hr>
 
     <h2>Sizing</h2>
-    <c-i v="alert square" style="height:36px;width:36px"></c-i>
-    <c-i v="alert square" size="36"></c-i>
+    <div class="demo">
+      <c-i v="alert square" style="height:36px;width:36px"></c-i>
+      <c-i v="alert square" size="36"></c-i>
+    </div>
 
     <p>Regular svg</p>
 
@@ -85,15 +117,20 @@
 
     <h2>Rotation</h2>
 
-    <p>Qualify icons with <code>-rotation</code>. Long, short and numeric syntax supported.</p>
-    <c-i v="arrowBar"></c-i>
-    <c-i v="arrowBar-top"></c-i>
-    <c-i v="arrowBar-right"></c-i>
-    <c-i v="arrowBar-bottom"></c-i>
-    <c-i v="arrowBar-b"></c-i>
-    <c-i v="arrowBar-l"></c-i>
-    <c-i v="arrowBar-135"></c-i>
-    <c-i v="arrowBar-127"></c-i>
+    <p>Qualify icons with <code>-rotation</code>. Numeric syntax is also supported.</p>
+    <div class="demo">
+      <c-i v="arrowBar"></c-i>
+      <c-i v="arrowBar-t"></c-i>
+      <c-i v="arrowBar-tr"></c-i>
+      <c-i v="arrowBar-tl"></c-i>
+      <c-i v="arrowBar-r"></c-i>
+      <c-i v="arrowBar-b"></c-i>
+      <c-i v="arrowBar-l"></c-i>
+      <c-i v="arrowBar-br"></c-i>
+      <c-i v="arrowBar-bl"></c-i>
+      <c-i v="arrowBar-135"></c-i>
+      <c-i v="arrowBar-115"></c-i>
+    </div>
 
     <hr>
 
@@ -101,30 +138,32 @@
 
     <p>Qualify icons with <code>-addon</code>. Addon space is reserved with a mask so it works against any background.</p>
 
-    <c-i v="basket-bolt"></c-i>
-    <c-i v="basket-cancel"></c-i>
-    <c-i v="basket-check"></c-i>
-    <c-i v="basket-code"></c-i>
-    <c-i v="basket-cog"></c-i>
-    <c-i v="basket-discount"></c-i>
-    <c-i v="basket-dollar"></c-i>
-    <c-i v="basket-down"></c-i>
-    <c-i v="basket-exclamation"></c-i>
-    <c-i v="basket-heart"></c-i>
-    <c-i v="basket-minus"></c-i>
-    <c-i v="basket-off"></c-i>
-    <c-i v="basket-pause"></c-i>
-    <c-i v="basket-pin"></c-i>
-    <c-i v="basket-plus"></c-i>
-    <c-i v="basket-question"></c-i>
-    <c-i v="basket-search"></c-i>
-    <c-i v="basket-share"></c-i>
-    <c-i v="basket-star"></c-i>
-    <c-i v="basket-up"></c-i>
-    <c-i v="basket-x"></c-i>
-    <c-i v="basket"></c-i>
+    <div class="demo">
+      <c-i v="basket-bolt"></c-i>
+      <c-i v="basket-cancel"></c-i>
+      <c-i v="basket-check"></c-i>
+      <c-i v="basket-code"></c-i>
+      <c-i v="basket-cog"></c-i>
+      <c-i v="basket-discount"></c-i>
+      <c-i v="basket-dollar"></c-i>
+      <c-i v="basket-down"></c-i>
+      <c-i v="basket-exclamation"></c-i>
+      <c-i v="basket-heart"></c-i>
+      <c-i v="basket-minus"></c-i>
+      <c-i v="basket-off"></c-i>
+      <c-i v="basket-pause"></c-i>
+      <c-i v="basket-pin"></c-i>
+      <c-i v="basket-plus"></c-i>
+      <c-i v="basket-question"></c-i>
+      <c-i v="basket-search"></c-i>
+      <c-i v="basket-share"></c-i>
+      <c-i v="basket-star"></c-i>
+      <c-i v="basket-up"></c-i>
+      <c-i v="basket-x"></c-i>
+      <c-i v="basket"></c-i>
+    </div>
 
-    <div class="dark">
+    <div class="demo dark">
       <c-i v="basket-bolt"></c-i>
       <c-i v="basket-cancel"></c-i>
       <c-i v="basket-check"></c-i>
@@ -151,40 +190,168 @@
 
     <hr>
 
-    <c-i v="calendar-bolt"></c-i>
-    <c-i v="calendar-cancel"></c-i>
-    <c-i v="calendar-check"></c-i>
-    <c-i v="calendar-code"></c-i>
-    <c-i v="calendar-cog"></c-i>
-    <c-i v="calendar-time"></c-i>
-    <c-i v="calendar-repeat"></c-i>
-    <c-i v="calendar-stats"></c-i>
-    <c-i v="basket-time"></c-i>
-    <c-i v="basket-repeat"></c-i>
-    <c-i v="basket-stats"></c-i>
+    <div class="demo">
+      <c-i v="calendar-bolt"></c-i>
+      <c-i v="calendar-cancel"></c-i>
+      <c-i v="calendar-check"></c-i>
+      <c-i v="calendar-code"></c-i>
+      <c-i v="calendar-cog"></c-i>
+      <c-i v="calendar-time"></c-i>
+      <c-i v="calendar-repeat"></c-i>
+      <c-i v="calendar-stats"></c-i>
+      <c-i v="basket-time"></c-i>
+      <c-i v="basket-repeat"></c-i>
+      <c-i v="basket-stats"></c-i>
+    </div>
 
     <hr>
 
     <h2>Text</h2>
 
-    <c-i v="AB square"></c-i>
-    <c-i v="1 circle"></c-i>
-    <c-i v="ZZ circle off"></c-i>
-    <c-i v="calendar_17"></c-i>
-    <c-i v="calendar_x"></c-i>
-    <c-i v="calendar_X"></c-i>
-    <c-i v="calendar_O-off"></c-i>
+    <p>Add arbitrary text (even emojis...) to icons. Any unrecognised string is added as text or use <code>t</code> attribute (for example
+      if you want to
+      include - or space)</p>
+
+    <div class="demo">
+      <c-i v="✓ square"></c-i>
+      <c-i v="+ square"></c-i>
+      <c-i v="_ square" t="-"></c-i>
+      <c-i v="/ square"></c-i>
+      <c-i v="👍 square"></c-i>
+      <c-i v="AB square"></c-i>
+      <c-i v="AB tag"></c-i>
+      <c-i v="1 circle"></c-i>
+      <c-i v="ZZ circle off"></c-i>
+      <c-i v="calendar_17"></c-i>
+      <c-i v="calendar_x"></c-i>
+      <c-i v="calendar_X"></c-i>
+      <c-i v="calendar_O-off"></c-i>
+      <c-i v="calendar-off" t="0"></c-i>
+      <c-i v="calendar-off" t="0-0"></c-i>
+      <c-i v="calendar-off" t="0 0"></c-i>
+    </div>
+
+    <p>Bigger</p>
+    <c-i v="calendar-off" t="0 0" size="36"></c-i>
 
     <hr>
 
     <h2>Duotone</h2>
-    
+
     <p>Available as a global setting or per icon by using <code>-mono</code> or <code>-duo</code>.</p>
 
     <c-i v="AB square-mono"></c-i>
     <c-i v="AB square"></c-i>
+
+    <hr>
+
+    <h2>Some buttons</h2>
+
+    <p>You might want to adjust the size to {line-height|1}em for buttons.</p>
+
+    <p>Typically, if you have a 16px size with a 1.5 line height, a 24px icon work nicely! You could also use 1em if you want smaller icons.
+    </p>
+
+    <p>1.5em</p>
+
+    <div class="flex">
+      <button><c-i v="star"></c-i> <span>Star</span></button>
+      <button><c-i v="star-off"></c-i> <span>Star <i>off</i></span></button>
+      <button><c-i v="star"></c-i></button>
+      <button style="width:auto;padding:0;height: 40px;width:40px;justify-content: center;"><c-i v="star"></c-i></button>
+
+      <button style="font-size:48px;"><c-i v="star-off"></c-i> <span>Star</span></button>
+      <button style="font-size:48px;"><span>Star</span></button>
+    </div>
+
+    <p>1em (notice icon only will not be the same height anymore due to missing text)</p>
+
+    <div class="flex one">
+      <button><c-i v="star"></c-i> <span>Star</span></button>
+      <button><c-i v="star-off"></c-i> <span>Star <i>off</i></span></button>
+      <button><c-i v="star"></c-i></button>
+      <button style="width:auto;padding:0;height: 40px;width:40px;justify-content: center;"><c-i v="star"></c-i></button>
+
+      <button style="font-size:48px;"><c-i v="star-off"></c-i> <span>Star</span></button>
+      <button style="font-size:48px;"><span>Star</span></button>
+    </div>
+
+    <hr>
+
+    <h2>All icons!</h2>
+
+    <input type="search" placeholder="search" id="search">
+
+    <div class="demo" id="all">
+    </div>
+    <script type="module">
+      const all = document.getElementById('all');
+      const frameable = ['alert'];
+      const circlable = ["caret", "chevron", "bell"];
+      const addons = ["calendar", "basket"];
+      const text = ["calendar", "alarmEmpty"]
+      customElements.whenDefined("c-i").then(() => {
+        const data = customElements.get("c-i").getData();
+        Object.keys(data.icons).sort().forEach((i) => {
+          all.insertAdjacentHTML('beforeend', `<c-i v="${i}" title="${i}"></c-i>`);
+          if (frameable.includes(i)) {
+            Object.keys(data.frames).sort().forEach((f) => {
+              all.insertAdjacentHTML('beforeend', `<c-i v="${i} ${f}" title="${i} ${f}"></c-i>`);
+            })
+          }
+          if (circlable.includes(i)) {
+            all.insertAdjacentHTML('beforeend', `<c-i v="${i} circle" title="${i} circle"></c-i>`);
+          }
+          if (addons.includes(i)) {
+            Object.keys(data.addons).sort().forEach((a) => {
+              all.insertAdjacentHTML('beforeend', `<c-i v="${i}-${a}" title="${i}-${a}"></c-i>`);
+            })
+          }
+          if (text.includes(i)) {
+            all.insertAdjacentHTML('beforeend', `<c-i v="${i}" t="z" title="${i}" t="z"></c-i>`);
+            all.insertAdjacentHTML('beforeend', `<c-i v="${i}" t="AB" title="${i}" t="AB"></c-i>`);
+            all.insertAdjacentHTML('beforeend', `<c-i v="${i}" t="0" title="${i}" t="0"></c-i>`);
+            all.insertAdjacentHTML('beforeend', `<c-i v="${i}" t="+" title="${i}" t="+"></c-i>`);
+            all.insertAdjacentHTML('beforeend', `<c-i v="${i}" t="-" title="${i}" t="-"></c-i>`);
+          }
+          if (i.includes('arrow') || i.includes('caret') || i.includes('chevron')) {
+            ['r', 'b', 'l'].forEach((dir) => {
+              if (i.includes('arrows')) {
+                // arrows are bi directional
+                if (dir == "b" || dir == "l") {
+                  return;
+                }
+              }
+              all.insertAdjacentHTML('beforeend', `<c-i v="${i}-${dir}" title="${i}-${dir}"></c-i>`);
+              if (circlable.includes(i)) {
+                all.insertAdjacentHTML('beforeend', `<c-i v="${i}-${dir} circle" title="${i}-${dir} circle"></c-i>`);
+              }
+            })
+          }
+        });
+      });
+
+      const f = document.getElementById('search');
+      f.addEventListener("input", (ev) => {
+        const text = f.value;
+        document.querySelectorAll("#all c-i").forEach((div) => {
+          if (div.getAttribute('title').includes(text)) {
+            div.style.display = "";
+          } else {
+            div.style.display = "none";
+          }
+        });
+      });
+      const iconWrapper = document.querySelector("#all");
+      iconWrapper.addEventListener("click", (ev) => {
+        if (ev.target.getAttribute('title')) {
+          navigator.clipboard.writeText(ev.target.getAttribute('title'));
+        }
+      });
+    </script>
   </main>
   <footer>
+    If you like this, <a href="https://github.com/lekoala/composable-icon">give a star <l-i name="star" set="em"></l-i></a>
     <hr />
     Made with <l-i name="heart" set="em"></l-i> in <l-i name="be" set="fl"></l-i> by <a href="https://www.lekoala.be">LeKoala</a>
   </footer>

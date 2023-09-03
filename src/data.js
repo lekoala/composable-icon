@@ -1,7 +1,11 @@
 // Here we store various path separated with |. Paths prefixed with * can be duotoned.
 
+// Icons are generated from base svg files + a few manual parts
+import generatedIcons from "./icons.js";
+
 const frames = {
   circle: `M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0`,
+  tag: `M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z`,
   hexagon: `M19.875 6.27c.7 .398 1.13 1.143 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033z`,
   square: `M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z`,
   rsquare: `M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z`,
@@ -9,10 +13,10 @@ const frames = {
 };
 const icons = {
   alert: `M12 8v4|M12 16h.01`,
-  arrowBar: `M12 10l0 10|M12 10l4 4|M12 10l-4 4|M4 4l16 0`,
-  basket: `*M10 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0|M5.001 8h13.999a2 2 0 0 1 1.977 2.304l-1.255 7.152a3 3 0 0 1 -2.966 2.544h-9.512a3 3 0 0 1 -2.965 -2.544l-1.255 -7.152a2 2 0 0 1 1.977 -2.304z|M17 10l-2 -6|M7 10l2 -6`,
+  alarmEmpty: `*M12 13m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0|M7 4l-2.75 2|M17 4l2.75 2`,
   calendar: `M16,3v4|M8,3v4|*M18,5H6C4.9,5,4,5.9,4,7v4h16V7C20,5.9,19.1,5,18,5z|M20,11v8c0,1.1-0.9,2-2,2H6c-1.1,0-2-0.9-2-2v-8`,
 };
+Object.assign(icons, generatedIcons);
 const addons = {
   off: `M3 3l18 18`,
   bolt: `M19 16l-2 3h4l-2 3`,
@@ -39,9 +43,18 @@ const addons = {
   stats: `M18 14v4h4|M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0`,
   time: `M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0|M18 16.496v1.504l1 1`,
 };
+const aliases = {
+  add: "plus",
+};
+const offsets = {
+  calendar: "12,16.5",
+  alarmEmpty: "12,13.5|7",
+};
 
 export default {
   frames,
   icons,
   addons,
+  aliases,
+  offsets,
 };

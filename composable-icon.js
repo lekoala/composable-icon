@@ -2,16 +2,18 @@ import data from "./src/data.js";
 
 /**
  * Wrap icon in svg
+ * @link https://stackoverflow.com/questions/18467982/are-svg-parameters-such-as-xmlns-and-version-needed
  * @param {string} svg
  * @param {string} styles
  * @returns {string}
  */
 function wrap(svg, styles = "") {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="${options.strokeWidth}" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="${styles}">${svg}</svg>`;
+  return `<svg viewBox="0 0 24 24" stroke-width="${options.strokeWidth}" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="${styles}">${svg}</svg>`;
 }
 
 /**
  * Create paths based on definitions
+ * vector-effect="non-scaling-stroke" is required to avoid stroke changing when scaling
  * @param {string} d
  * @returns {string}
  */
@@ -19,14 +21,19 @@ function path(d) {
   return d
     .split("|")
     .map((d) => {
+      // It's a circle
+      if (d.indexOf('cx="') === 0) {
+        return `<circle ${d} fill="currentColor" vector-effect="non-scaling-stroke" />`;
+      }
       const isDuotone = d.includes("*");
       if (isDuotone) {
         d = d.replace("*", "");
       }
+      const p = `<path d="${d}" vector-effect="non-scaling-stroke"></path>`;
       if (options.duotone && isDuotone) {
-        return `<path d="${d}"></path><path d="${d}"opacity="0.2" fill="currentColor" stroke="none"></path>`;
+        return `${p}${duotone(d)}`;
       }
-      return `<path d="${d}"></path>`;
+      return p;
     })
     .join("");
 }
@@ -85,15 +92,24 @@ ${addonSvg}`;
  */
 function text(t, icon) {
   // Center by default
-  let pos = "12,14";
+  let pos = "12,13";
   let s = 10;
 
   // Need specific positioning
-  if (icon == "calendar") {
-    pos = "12,16.5";
-    s = 6;
+  const offset = data.offsets[icon];
+  if (offset) {
+    pos = offset.split("|")[0];
+    s = offset.split("|")[1] || 6;
   }
-  return `<g transform="translate(${pos})"><text x="0" y="0" style="font-size:${s}px;font-weight:lighter;letter-spacing:1px;font-family:system-ui,sans-serif;" text-anchor="middle" dominant-baseline="middle">${t}</text></g>`;
+
+  // This may need some finetuning...
+  fw = "normal";
+  // Bold small signs
+  if (["+", "-", ":", "/"].includes(t)) {
+    fw = "bold";
+  }
+  sw = options.strokeWidth * 0.5;
+  return `<g transform="translate(${pos})"><text x="0" y="0" style="font-size:${s}px;font-weight:${fw};font-family:system-ui,sans-serif;" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke-width="${sw}">${t}</text></g>`;
 }
 
 const options = {
@@ -112,30 +128,43 @@ class ComposableIcon extends HTMLElement {
 
   load() {
     let v = this.getAttribute("v");
+    let t = this.getAttribute("t");
 
     let svg = "";
 
     let icon,
-      t,
       frame,
       addon,
       rotationOrAddon = null;
 
+    // syntax:
+    // <c-i v="{icon}(_{text})(-{addonOrRotation})( {frame})( {addon})" t="{text}"></c-i>
+
+    // First, split by space
     [icon, frame, addon] = v.split(" ");
 
-    // It has a built in addon
+    // It has a built in addon or rotation
     if (icon.includes("-")) {
       [icon, rotationOrAddon] = icon.split("-");
     }
 
     // It has some text
     if (icon.includes("_")) {
-      [icon, t] = icon.split("_");
+      const textParts = icon.split("_");
+      if (textParts[1] != "") {
+        t = textParts[1];
+        icon = textParts[0];
+      } else {
+        t = textParts[0] || t;
+        icon = null;
+      }
     }
 
     if (icon) {
-      if (data.icons[icon]) {
-        svg = path(data.icons[icon]);
+      icon = data.aliases[icon] || icon;
+      const dataIcon = data.icons[icon];
+      if (dataIcon) {
+        svg = path(dataIcon);
       } else {
         t = icon; // use a text
       }
@@ -151,6 +180,11 @@ class ComposableIcon extends HTMLElement {
         frame = frame.replace("-mono", "");
       }
       const frameSvg = data.frames[frame];
+      // Scales icons that do not fit will
+      const scaled = ["alert"];
+      if (!scaled.includes(icon)) {
+        svg = `<g transform="scale(0.6)" transform-origin="50% 50%">${svg}</g>`;
+      }
       svg += path(frameSvg);
       if (!isMonotone && (options.duotone || isDuotone)) {
         svg += duotone(frameSvg);
@@ -162,35 +196,34 @@ class ComposableIcon extends HTMLElement {
       svg += text(t, icon);
     }
 
-    if (addon && data.addons[addon]) {
-      svg = addonMask(svg, addon);
+    // Do we have an addon as a third arg?
+    if (addon) {
+      addon = data.aliases[addon] || addon;
+      if (data.addons[addon]) {
+        svg = addonMask(svg, addon);
+      }
     }
 
+    // Rotation or addon?
     const styles = [];
     if (rotationOrAddon) {
+      rotationOrAddon = data.aliases[rotationOrAddon] || rotationOrAddon;
       if (data.addons[rotationOrAddon]) {
         svg = addonMask(svg, rotationOrAddon);
       } else {
         let rv = parseInt(rotationOrAddon);
         if (isNaN(rv)) {
-          switch (rotationOrAddon) {
-            case "top":
-            case "t":
-              rv = 0;
-              break;
-            case "left":
-            case "l":
-              rv = -90;
-              break;
-            case "right":
-            case "r":
-              rv = 90;
-              break;
-            case "bottom":
-            case "b":
-              rv = 180;
-              break;
-          }
+          const map = {
+            t: 0,
+            tr: 45,
+            tl: -45,
+            l: -90,
+            r: 90,
+            b: 180,
+            br: 135,
+            bl: -135,
+          };
+          rv = map[rotationOrAddon] || 0;
         }
         styles.push(`transform: rotate(${rv}deg)`);
       }
@@ -204,7 +237,7 @@ class ComposableIcon extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["v"];
+    return ["v", "t"];
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
