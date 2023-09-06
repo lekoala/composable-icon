@@ -11,7 +11,6 @@
     customElements.whenDefined("c-i").then(() => {
       customElements.get("c-i").configure({
         duotone: true,
-        strokeWidth: 1,
       });
     });
   </script>
@@ -75,25 +74,20 @@
     <p><em>Compose svg icons on the fly"</em></p>
   </header>
   <main>
-    <h2>Frames</h2>
+    <h2>Shapes</h2>
     <p>Our element</p>
     <div class="demo">
       <c-i v="alert square"></c-i>
-      <c-i v="alert rsquare"></c-i>
+      <c-i v="alert square-duo"></c-i>
+      <c-i v="alert square-fill"></c-i>
+      <c-i v="1 square-fill"></c-i>
       <c-i v="alert triangle"></c-i>
       <c-i v="alert hexagon"></c-i>
       <c-i v="alert circle"></c-i>
-      <c-i v="alert tag"></c-i>
+      <c-i v="alert dotCircle"></c-i>
+      <c-i v="alert badge"></c-i>
       <span class="red"><c-i v="alert circle"></c-i></span>
     </div>
-    <p>Regular svg</p>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none"
-      stroke-linecap="round" stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-      <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z"></path>
-      <path d="M12 8v4"></path>
-      <path d="M12 16h.01"></path>
-    </svg>
 
     <hr>
 
@@ -101,6 +95,8 @@
     <div class="demo">
       <c-i v="alert square" style="height:36px;width:36px"></c-i>
       <c-i v="alert square" size="36"></c-i>
+      <c-i v="alert square" style="--ci-size:124px"></c-i>
+      <c-i v="alert square" size="124"></c-i>
     </div>
 
     <p>Regular svg</p>
@@ -139,69 +135,47 @@
     <p>Qualify icons with <code>-addon</code>. Addon space is reserved with a mask so it works against any background.</p>
 
     <div class="demo">
-      <c-i v="basket-bolt"></c-i>
-      <c-i v="basket-cancel"></c-i>
-      <c-i v="basket-check"></c-i>
-      <c-i v="basket-code"></c-i>
-      <c-i v="basket-cog"></c-i>
-      <c-i v="basket-discount"></c-i>
-      <c-i v="basket-dollar"></c-i>
-      <c-i v="basket-down"></c-i>
-      <c-i v="basket-exclamation"></c-i>
-      <c-i v="basket-heart"></c-i>
-      <c-i v="basket-minus"></c-i>
-      <c-i v="basket-off"></c-i>
-      <c-i v="basket-pause"></c-i>
-      <c-i v="basket-pin"></c-i>
-      <c-i v="basket-plus"></c-i>
-      <c-i v="basket-question"></c-i>
-      <c-i v="basket-search"></c-i>
-      <c-i v="basket-share"></c-i>
-      <c-i v="basket-star"></c-i>
-      <c-i v="basket-up"></c-i>
-      <c-i v="basket-x"></c-i>
-      <c-i v="basket"></c-i>
+      <c-i v="lightbulb-off"></c-i>
+      <c-i v="lightbulb-fill-off"></c-i>
+      <c-i v="person-off"></c-i>
+      <c-i v="person-fill-off"></c-i>
+      <c-i v="person-plus"></c-i>
+      <c-i v="person-fill-plus"></c-i>
+      <c-i v="person-check"></c-i>
+      <c-i v="person-fill-check"></c-i>
+      <c-i v="person-fill-minus"></c-i>
+      <c-i v="person-fill-up"></c-i>
+      <c-i v="person-fill-down"></c-i>
+      <c-i v="person-fill-right"></c-i>
+      <c-i v="person-fill-left"></c-i>
+      <c-i v="person-fill-exclamation"></c-i>
+      <c-i v="person-fill-cog"></c-i>
+      <c-i v="person-fill-lock"></c-i>
+      <c-i v="person-fill-ban"></c-i>
+      <c-i v="person-fill-x"></c-i>
+      <c-i v="person-fill-heart"></c-i>
     </div>
 
     <div class="demo dark">
-      <c-i v="basket-bolt"></c-i>
-      <c-i v="basket-cancel"></c-i>
-      <c-i v="basket-check"></c-i>
-      <c-i v="basket-code"></c-i>
-      <c-i v="basket-cog"></c-i>
-      <c-i v="basket-discount"></c-i>
-      <c-i v="basket-dollar"></c-i>
-      <c-i v="basket-down"></c-i>
-      <c-i v="basket-exclamation"></c-i>
-      <c-i v="basket-heart"></c-i>
-      <c-i v="basket-minus"></c-i>
-      <c-i v="basket-off"></c-i>
-      <c-i v="basket-pause"></c-i>
-      <c-i v="basket-pin"></c-i>
-      <c-i v="basket-plus"></c-i>
-      <c-i v="basket-question"></c-i>
-      <c-i v="basket-search"></c-i>
-      <c-i v="basket-share"></c-i>
-      <c-i v="basket-star"></c-i>
-      <c-i v="basket-up"></c-i>
-      <c-i v="basket-x"></c-i>
-      <c-i v="basket"></c-i>
-    </div>
-
-    <hr>
-
-    <div class="demo">
-      <c-i v="calendar-bolt"></c-i>
-      <c-i v="calendar-cancel"></c-i>
-      <c-i v="calendar-check"></c-i>
-      <c-i v="calendar-code"></c-i>
-      <c-i v="calendar-cog"></c-i>
-      <c-i v="calendar-time"></c-i>
-      <c-i v="calendar-repeat"></c-i>
-      <c-i v="calendar-stats"></c-i>
-      <c-i v="basket-time"></c-i>
-      <c-i v="basket-repeat"></c-i>
-      <c-i v="basket-stats"></c-i>
+      <c-i v="lightbulb-off"></c-i>
+      <c-i v="lightbulb-fill-off"></c-i>
+      <c-i v="person-off"></c-i>
+      <c-i v="person-fill-off"></c-i>
+      <c-i v="person-plus"></c-i>
+      <c-i v="person-fill-plus"></c-i>
+      <c-i v="person-check"></c-i>
+      <c-i v="person-fill-check"></c-i>
+      <c-i v="person-fill-minus"></c-i>
+      <c-i v="person-fill-up"></c-i>
+      <c-i v="person-fill-down"></c-i>
+      <c-i v="person-fill-right"></c-i>
+      <c-i v="person-fill-left"></c-i>
+      <c-i v="person-fill-exclamation"></c-i>
+      <c-i v="person-fill-cog"></c-i>
+      <c-i v="person-fill-lock"></c-i>
+      <c-i v="person-fill-ban"></c-i>
+      <c-i v="person-fill-x"></c-i>
+      <c-i v="person-fill-heart"></c-i>
     </div>
 
     <hr>
@@ -210,7 +184,7 @@
 
     <p>Add arbitrary text (even emojis...) to icons. Any unrecognised string is added as text or use <code>t</code> attribute (for example
       if you want to
-      include - or space)</p>
+      include - or space). Fit up to 3 characters most of the time.</p>
 
     <div class="demo">
       <c-i v="✓ square"></c-i>
@@ -219,13 +193,14 @@
       <c-i v="/ square"></c-i>
       <c-i v="👍 square"></c-i>
       <c-i v="AB square"></c-i>
-      <c-i v="AB tag"></c-i>
+      <c-i v="AB badge"></c-i>
+      <c-i v="ABC badge"></c-i>
       <c-i v="1 circle"></c-i>
       <c-i v="ZZ circle off"></c-i>
       <c-i v="calendar_17"></c-i>
       <c-i v="calendar_x"></c-i>
       <c-i v="calendar_X"></c-i>
-      <c-i v="calendar_O-off"></c-i>
+      <c-i v="calendar_O off"></c-i>
       <c-i v="calendar-off" t="0"></c-i>
       <c-i v="calendar-off" t="0-0"></c-i>
       <c-i v="calendar-off" t="0 0"></c-i>
@@ -238,9 +213,9 @@
 
     <h2>Duotone</h2>
 
-    <p>Available as a global setting or per icon by using <code>-mono</code> or <code>-duo</code>.</p>
+    <p>Shapes are not duotone by default and must use <code>-duo</code>. This avoid "double" duotone when framing icons.</p>
 
-    <c-i v="AB square-mono"></c-i>
+    <c-i v="AB square-duo"></c-i>
     <c-i v="AB square"></c-i>
 
     <hr>
@@ -273,7 +248,7 @@
       <button style="width:auto;padding:0;height: 40px;width:40px;justify-content: center;"><c-i v="star"></c-i></button>
 
       <button style="font-size:48px;"><c-i v="star-off"></c-i> <span>Star</span></button>
-      <button style="font-size:48px;"><span>Star</span></button>
+      <button style="font-size:48px;"><span>Star (no icons)</span></button>
     </div>
 
     <hr>
@@ -288,14 +263,14 @@
       const all = document.getElementById('all');
       const frameable = ['alert'];
       const circlable = ["caret", "chevron", "bell"];
-      const addons = ["calendar", "basket"];
+      const addons = ["calendar", "basket", "home"];
       const text = ["calendar", "alarmEmpty"]
       customElements.whenDefined("c-i").then(() => {
         const data = customElements.get("c-i").getData();
         Object.keys(data.icons).sort().forEach((i) => {
           all.insertAdjacentHTML('beforeend', `<c-i v="${i}" title="${i}"></c-i>`);
           if (frameable.includes(i)) {
-            Object.keys(data.frames).sort().forEach((f) => {
+            Object.keys(data.shapes).sort().forEach((f) => {
               all.insertAdjacentHTML('beforeend', `<c-i v="${i} ${f}" title="${i} ${f}"></c-i>`);
             })
           }

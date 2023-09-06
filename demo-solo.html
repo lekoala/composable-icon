@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Composable Icon Demo</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%237d6ee7%22></rect><path fill=%22%23fff%22 d=%22M61.34 68.92L61.34 68.92Q62.06 68.92 62.64 69.51L62.64 69.51L66.06 73.24Q62.10 77.83 56.46 80.40Q50.81 82.96 42.84 82.96L42.84 82.96Q35.87 82.96 30.20 80.56Q24.53 78.15 20.52 73.81Q16.52 69.46 14.31 63.39Q12.11 57.31 12.11 50.02L12.11 50.02Q12.11 42.73 14.47 36.66Q16.84 30.58 21.11 26.22Q25.38 21.85 31.35 19.45Q37.31 17.04 44.51 17.04L44.51 17.04Q51.62 17.04 56.77 19.24Q61.92 21.45 65.93 25.23L65.93 25.23L63.09 29.23Q62.78 29.68 62.38 29.98Q61.97 30.27 61.20 30.27L61.20 30.27Q60.62 30.27 59.97 29.84Q59.31 29.41 58.41 28.78Q57.52 28.15 56.30 27.43Q55.08 26.71 53.42 26.08Q51.75 25.45 49.55 25.03Q47.34 24.60 44.47 24.60L44.47 24.60Q39.29 24.60 34.99 26.38Q30.69 28.15 27.59 31.44Q24.48 34.72 22.75 39.45Q21.02 44.17 21.02 50.02L21.02 50.02Q21.02 56.05 22.75 60.78Q24.48 65.50 27.48 68.77Q30.47 72.03 34.56 73.74Q38.66 75.45 43.38 75.45L43.38 75.45Q46.27 75.45 48.56 75.11Q50.86 74.77 52.81 74.05Q54.77 73.33 56.46 72.23Q58.14 71.13 59.85 69.60L59.85 69.60Q60.62 68.92 61.34 68.92ZM87.89 17.76L87.89 82.24L79.16 82.24L79.16 17.76L87.89 17.76Z%22></path></svg>" />
+  <script src="composable-icon.min.js"></script>
+  <script>
+    customElements.whenDefined("c-i").then(() => {
+      customElements.get("c-i").configure({
+        duotone: true,
+        strokeWidth: 1,
+      });
+    });
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mvp.css@1.7.4/mvp.css" />
+  <link rel="stylesheet" href="c-i.css" />
+  <style>
+    .red {
+      color: red;
+    }
+
+    .dark {
+      background: #222;
+      color: #eee;
+      border-color: #222;
+    }
+
+    .big {
+      font-size: 48px;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    button span {
+      display: inline-block;
+    }
+
+    button c-i+span {
+      margin-left: 0.5ch;
+    }
+
+    .flex {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .flex>* {
+      margin-right: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 100 100">
+        <rect width="100" height="100" rx="20" fill="#7d6ee7"></rect>
+        <path fill="#fff"
+          d="M61.34 68.92L61.34 68.92Q62.06 68.92 62.64 69.51L62.64 69.51L66.06 73.24Q62.10 77.83 56.46 80.40Q50.81 82.96 42.84 82.96L42.84 82.96Q35.87 82.96 30.20 80.56Q24.53 78.15 20.52 73.81Q16.52 69.46 14.31 63.39Q12.11 57.31 12.11 50.02L12.11 50.02Q12.11 42.73 14.47 36.66Q16.84 30.58 21.11 26.22Q25.38 21.85 31.35 19.45Q37.31 17.04 44.51 17.04L44.51 17.04Q51.62 17.04 56.77 19.24Q61.92 21.45 65.93 25.23L65.93 25.23L63.09 29.23Q62.78 29.68 62.38 29.98Q61.97 30.27 61.20 30.27L61.20 30.27Q60.62 30.27 59.97 29.84Q59.31 29.41 58.41 28.78Q57.52 28.15 56.30 27.43Q55.08 26.71 53.42 26.08Q51.75 25.45 49.55 25.03Q47.34 24.60 44.47 24.60L44.47 24.60Q39.29 24.60 34.99 26.38Q30.69 28.15 27.59 31.44Q24.48 34.72 22.75 39.45Q21.02 44.17 21.02 50.02L21.02 50.02Q21.02 56.05 22.75 60.78Q24.48 65.50 27.48 68.77Q30.47 72.03 34.56 73.74Q38.66 75.45 43.38 75.45L43.38 75.45Q46.27 75.45 48.56 75.11Q50.86 74.77 52.81 74.05Q54.77 73.33 56.46 72.23Q58.14 71.13 59.85 69.60L59.85 69.60Q60.62 68.92 61.34 68.92ZM87.89 17.76L87.89 82.24L79.16 82.24L79.16 17.76L87.89 17.76Z">
+        </path>
+      </svg>
+      Composable Icon
+    </h1>
+    <p><em>Compose svg icons on the fly"</em></p>
+  </header>
+  <main>
+    <p>Available shapes: bag, bell, bookmark, bookmarks, box, bucket, calendar, cart, chat, chatLeft, chatRight, chatSquare, circle, clipboard, cloud, collection, cup, diamond, display, egg, fileEarmark, file, files, folder, heart, heptagon, hexagon, house, houses, journal, octagon, pentagon, shield, square, triangle, badge, backspace, droplet, patch, dotCircle, dotSquare, sd, sign</p>
+    <div class="demo">
+      <c-i v="alert bag"></c-i>
+      <c-i v="check bag"></c-i>
+      <c-i v="x bag"></c-i>
+      <c-i v="alert bag-fill"></c-i>
+      <c-i v="check bag-fill"></c-i>
+      <c-i v="x bag-fill"></c-i>
+      <c-i v="alert bell"></c-i>
+      <c-i v="check bell"></c-i>
+      <c-i v="x bell"></c-i>
+      <c-i v="alert bell-fill"></c-i>
+      <c-i v="check bell-fill"></c-i>
+      <c-i v="x bell-fill"></c-i>
+      <c-i v="alert bookmark"></c-i>
+      <c-i v="check bookmark"></c-i>
+      <c-i v="x bookmark"></c-i>
+      <c-i v="alert bookmark-fill"></c-i>
+      <c-i v="check bookmark-fill"></c-i>
+      <c-i v="x bookmark-fill"></c-i>
+      <c-i v="alert bookmarks"></c-i>
+      <c-i v="check bookmarks"></c-i>
+      <c-i v="x bookmarks"></c-i>
+      <c-i v="alert bookmarks-fill"></c-i>
+      <c-i v="check bookmarks-fill"></c-i>
+      <c-i v="x bookmarks-fill"></c-i>
+      <c-i v="alert box"></c-i>
+      <c-i v="check box"></c-i>
+      <c-i v="x box"></c-i>
+      <c-i v="alert box-fill"></c-i>
+      <c-i v="check box-fill"></c-i>
+      <c-i v="x box-fill"></c-i>
+      <c-i v="alert bucket"></c-i>
+      <c-i v="check bucket"></c-i>
+      <c-i v="x bucket"></c-i>
+      <c-i v="alert bucket-fill"></c-i>
+      <c-i v="check bucket-fill"></c-i>
+      <c-i v="x bucket-fill"></c-i>
+      <c-i v="alert calendar"></c-i>
+      <c-i v="check calendar"></c-i>
+      <c-i v="x calendar"></c-i>
+      <c-i v="alert calendar-fill"></c-i>
+      <c-i v="check calendar-fill"></c-i>
+      <c-i v="x calendar-fill"></c-i>
+      <c-i v="alert cart"></c-i>
+      <c-i v="check cart"></c-i>
+      <c-i v="x cart"></c-i>
+      <c-i v="alert cart-fill"></c-i>
+      <c-i v="check cart-fill"></c-i>
+      <c-i v="x cart-fill"></c-i>
+      <c-i v="alert chat"></c-i>
+      <c-i v="check chat"></c-i>
+      <c-i v="x chat"></c-i>
+      <c-i v="alert chat-fill"></c-i>
+      <c-i v="check chat-fill"></c-i>
+      <c-i v="x chat-fill"></c-i>
+      <c-i v="alert chatLeft"></c-i>
+      <c-i v="check chatLeft"></c-i>
+      <c-i v="x chatLeft"></c-i>
+      <c-i v="alert chatLeft-fill"></c-i>
+      <c-i v="check chatLeft-fill"></c-i>
+      <c-i v="x chatLeft-fill"></c-i>
+      <c-i v="alert chatRight"></c-i>
+      <c-i v="check chatRight"></c-i>
+      <c-i v="x chatRight"></c-i>
+      <c-i v="alert chatRight-fill"></c-i>
+      <c-i v="check chatRight-fill"></c-i>
+      <c-i v="x chatRight-fill"></c-i>
+      <c-i v="alert chatSquare"></c-i>
+      <c-i v="check chatSquare"></c-i>
+      <c-i v="x chatSquare"></c-i>
+      <c-i v="alert chatSquare-fill"></c-i>
+      <c-i v="check chatSquare-fill"></c-i>
+      <c-i v="x chatSquare-fill"></c-i>
+      <c-i v="alert circle"></c-i>
+      <c-i v="check circle"></c-i>
+      <c-i v="x circle"></c-i>
+      <c-i v="alert circle-fill"></c-i>
+      <c-i v="check circle-fill"></c-i>
+      <c-i v="x circle-fill"></c-i>
+      <c-i v="alert clipboard"></c-i>
+      <c-i v="check clipboard"></c-i>
+      <c-i v="x clipboard"></c-i>
+      <c-i v="alert clipboard-fill"></c-i>
+      <c-i v="check clipboard-fill"></c-i>
+      <c-i v="x clipboard-fill"></c-i>
+      <c-i v="alert cloud"></c-i>
+      <c-i v="check cloud"></c-i>
+      <c-i v="x cloud"></c-i>
+      <c-i v="alert cloud-fill"></c-i>
+      <c-i v="check cloud-fill"></c-i>
+      <c-i v="x cloud-fill"></c-i>
+      <c-i v="alert collection"></c-i>
+      <c-i v="check collection"></c-i>
+      <c-i v="x collection"></c-i>
+      <c-i v="alert collection-fill"></c-i>
+      <c-i v="check collection-fill"></c-i>
+      <c-i v="x collection-fill"></c-i>
+      <c-i v="alert cup"></c-i>
+      <c-i v="check cup"></c-i>
+      <c-i v="x cup"></c-i>
+      <c-i v="alert cup-fill"></c-i>
+      <c-i v="check cup-fill"></c-i>
+      <c-i v="x cup-fill"></c-i>
+      <c-i v="alert diamond"></c-i>
+      <c-i v="check diamond"></c-i>
+      <c-i v="x diamond"></c-i>
+      <c-i v="alert diamond-fill"></c-i>
+      <c-i v="check diamond-fill"></c-i>
+      <c-i v="x diamond-fill"></c-i>
+      <c-i v="alert display"></c-i>
+      <c-i v="check display"></c-i>
+      <c-i v="x display"></c-i>
+      <c-i v="alert display-fill"></c-i>
+      <c-i v="check display-fill"></c-i>
+      <c-i v="x display-fill"></c-i>
+      <c-i v="alert egg"></c-i>
+      <c-i v="check egg"></c-i>
+      <c-i v="x egg"></c-i>
+      <c-i v="alert egg-fill"></c-i>
+      <c-i v="check egg-fill"></c-i>
+      <c-i v="x egg-fill"></c-i>
+      <c-i v="alert fileEarmark"></c-i>
+      <c-i v="check fileEarmark"></c-i>
+      <c-i v="x fileEarmark"></c-i>
+      <c-i v="alert fileEarmark-fill"></c-i>
+      <c-i v="check fileEarmark-fill"></c-i>
+      <c-i v="x fileEarmark-fill"></c-i>
+      <c-i v="alert file"></c-i>
+      <c-i v="check file"></c-i>
+      <c-i v="x file"></c-i>
+      <c-i v="alert file-fill"></c-i>
+      <c-i v="check file-fill"></c-i>
+      <c-i v="x file-fill"></c-i>
+      <c-i v="alert files"></c-i>
+      <c-i v="check files"></c-i>
+      <c-i v="x files"></c-i>
+      <c-i v="alert folder"></c-i>
+      <c-i v="check folder"></c-i>
+      <c-i v="x folder"></c-i>
+      <c-i v="alert folder-fill"></c-i>
+      <c-i v="check folder-fill"></c-i>
+      <c-i v="x folder-fill"></c-i>
+      <c-i v="alert heart"></c-i>
+      <c-i v="check heart"></c-i>
+      <c-i v="x heart"></c-i>
+      <c-i v="alert heart-fill"></c-i>
+      <c-i v="check heart-fill"></c-i>
+      <c-i v="x heart-fill"></c-i>
+      <c-i v="alert heptagon"></c-i>
+      <c-i v="check heptagon"></c-i>
+      <c-i v="x heptagon"></c-i>
+      <c-i v="alert heptagon-fill"></c-i>
+      <c-i v="check heptagon-fill"></c-i>
+      <c-i v="x heptagon-fill"></c-i>
+      <c-i v="alert hexagon"></c-i>
+      <c-i v="check hexagon"></c-i>
+      <c-i v="x hexagon"></c-i>
+      <c-i v="alert hexagon-fill"></c-i>
+      <c-i v="check hexagon-fill"></c-i>
+      <c-i v="x hexagon-fill"></c-i>
+      <c-i v="alert house"></c-i>
+      <c-i v="check house"></c-i>
+      <c-i v="x house"></c-i>
+      <c-i v="alert house-fill"></c-i>
+      <c-i v="check house-fill"></c-i>
+      <c-i v="x house-fill"></c-i>
+      <c-i v="alert houses"></c-i>
+      <c-i v="check houses"></c-i>
+      <c-i v="x houses"></c-i>
+      <c-i v="alert houses-fill"></c-i>
+      <c-i v="check houses-fill"></c-i>
+      <c-i v="x houses-fill"></c-i>
+      <c-i v="alert journal"></c-i>
+      <c-i v="check journal"></c-i>
+      <c-i v="x journal"></c-i>
+      <c-i v="alert octagon"></c-i>
+      <c-i v="check octagon"></c-i>
+      <c-i v="x octagon"></c-i>
+      <c-i v="alert octagon-fill"></c-i>
+      <c-i v="check octagon-fill"></c-i>
+      <c-i v="x octagon-fill"></c-i>
+      <c-i v="alert pentagon"></c-i>
+      <c-i v="check pentagon"></c-i>
+      <c-i v="x pentagon"></c-i>
+      <c-i v="alert pentagon-fill"></c-i>
+      <c-i v="check pentagon-fill"></c-i>
+      <c-i v="x pentagon-fill"></c-i>
+      <c-i v="alert shield"></c-i>
+      <c-i v="check shield"></c-i>
+      <c-i v="x shield"></c-i>
+      <c-i v="alert shield-fill"></c-i>
+      <c-i v="check shield-fill"></c-i>
+      <c-i v="x shield-fill"></c-i>
+      <c-i v="alert square"></c-i>
+      <c-i v="check square"></c-i>
+      <c-i v="x square"></c-i>
+      <c-i v="alert square-fill"></c-i>
+      <c-i v="check square-fill"></c-i>
+      <c-i v="x square-fill"></c-i>
+      <c-i v="alert triangle"></c-i>
+      <c-i v="check triangle"></c-i>
+      <c-i v="x triangle"></c-i>
+      <c-i v="alert triangle-fill"></c-i>
+      <c-i v="check triangle-fill"></c-i>
+      <c-i v="x triangle-fill"></c-i>
+      <c-i v="alert badge"></c-i>
+      <c-i v="check badge"></c-i>
+      <c-i v="x badge"></c-i>
+      <c-i v="alert badge-fill"></c-i>
+      <c-i v="check badge-fill"></c-i>
+      <c-i v="x badge-fill"></c-i>
+      <c-i v="alert backspace"></c-i>
+      <c-i v="check backspace"></c-i>
+      <c-i v="x backspace"></c-i>
+      <c-i v="alert backspace-fill"></c-i>
+      <c-i v="check backspace-fill"></c-i>
+      <c-i v="x backspace-fill"></c-i>
+      <c-i v="alert droplet"></c-i>
+      <c-i v="check droplet"></c-i>
+      <c-i v="x droplet"></c-i>
+      <c-i v="alert droplet-fill"></c-i>
+      <c-i v="check droplet-fill"></c-i>
+      <c-i v="x droplet-fill"></c-i>
+      <c-i v="alert patch"></c-i>
+      <c-i v="check patch"></c-i>
+      <c-i v="x patch"></c-i>
+      <c-i v="alert patch-fill"></c-i>
+      <c-i v="check patch-fill"></c-i>
+      <c-i v="x patch-fill"></c-i>
+      <c-i v="alert dotCircle"></c-i>
+      <c-i v="check dotCircle"></c-i>
+      <c-i v="x dotCircle"></c-i>
+      <c-i v="alert dotSquare"></c-i>
+      <c-i v="check dotSquare"></c-i>
+      <c-i v="x dotSquare"></c-i>
+      <c-i v="alert sd"></c-i>
+      <c-i v="check sd"></c-i>
+      <c-i v="x sd"></c-i>
+      <c-i v="alert sd-fill"></c-i>
+      <c-i v="check sd-fill"></c-i>
+      <c-i v="x sd-fill"></c-i>
+      <c-i v="alert sign"></c-i>
+      <c-i v="check sign"></c-i>
+      <c-i v="x sign"></c-i>
+      <c-i v="alert sign-fill"></c-i>
+      <c-i v="check sign-fill"></c-i>
+      <c-i v="x sign-fill"></c-i>
+    </div>
+
+    <p>Icons</p>
+
+    <div class="demo">
+      <c-i v="activity"></c-i>
+      <c-i v="activity circle"></c-i>
+      <c-i v="airplane"></c-i>
+      <c-i v="airplane-fill"></c-i>
+      <c-i v="alarm"></c-i>
+      <c-i v="caret"></c-i>
+      <c-i v="caret-r"></c-i>
+      <c-i v="caret-fill-r"></c-i>
+      <c-i v="caret circle"></c-i>
+      <c-i v="caret circle-duo"></c-i>
+      <c-i v="caret-fill circle-fill"></c-i>
+      <c-i v="caret-r circle"></c-i>
+      <c-i v="caret-fill-r circle-fill"></c-i>
+      <c-i v="caret-b circle"></c-i>
+      <c-i v="caret-b circle-fill"></c-i>
+      <c-i v="person"></c-i>
+      <c-i v="person-fill"></c-i>
+      <c-i v="heart"></c-i>
+      <c-i v="miniHeart bag"></c-i>
+      <c-i v="miniStar bag"></c-i>
+      <c-i v="plus bag"></c-i>
+      <c-i v="minus bag"></c-i>
+      <c-i v="x bag"></c-i>
+      <c-i v="dotsDots chat"></c-i>
+      <c-i v="quotes chat"></c-i>
+      <c-i v="text chat"></c-i>
+      <c-i v="dotsDots chatSquare"></c-i>
+      <c-i v="quotes chatSquare"></c-i>
+      <c-i v="text chatSquare"></c-i>
+      <c-i v="stats clipboard"></c-i>
+      <c-i v="stats clipboard-fill"></c-i>
+      <c-i v="arrowUp cloud"></c-i>
+      <c-i v="arrowDown cloud-fill"></c-i>
+      <c-i v="cloud off"></c-i>
+      <c-i v="cloud slash"></c-i>
+      <c-i v="envelope"></c-i>
+      <c-i v="envelope-at"></c-i>
+      <c-i v="exclamation circle"></c-i>
+      <c-i v="alert circle"></c-i>
+      <c-i v="fileEarmarkImage"></c-i>
+      <c-i v="lock fileEarmark"></c-i>
+    </div>
+
+    <p>Addons</p>
+
+    <c-i v="lightbulb-off"></c-i>
+    <c-i v="lightbulb-fill-off"></c-i>
+    <c-i v="person-off"></c-i>
+    <c-i v="person-fill-off"></c-i>
+    <c-i v="person-plus"></c-i>
+    <c-i v="person-fill-plus"></c-i>
+    <c-i v="person-check"></c-i>
+    <c-i v="person-fill-check"></c-i>
+    <c-i v="person-fill-minus"></c-i>
+    <c-i v="person-fill-up"></c-i>
+    <c-i v="person-fill-down"></c-i>
+    <c-i v="person-fill-right"></c-i>
+    <c-i v="person-fill-left"></c-i>
+    <c-i v="person-fill-exclamation"></c-i>
+    <c-i v="person-fill-cog"></c-i>
+    <c-i v="person-fill-lock"></c-i>
+    <c-i v="person-fill-ban"></c-i>
+    <c-i v="person-fill-x"></c-i>
+    <c-i v="person-fill-heart"></c-i>
+
+
+    <p>File extension special case</p>
+
+    <c-i v="MP3 file"></c-i>
+    <c-i v="PDF file"></c-i>
+    <c-i v="PS file"></c-i>
+
+    <p>Types of fill</p>
+
+    <div class="demo">
+      <c-i v="alert square"></c-i>
+      <c-i v="alert square-duo"></c-i>
+      <c-i v="alert square-fill"></c-i>
+      <c-i v="alert square-duo-fill"></c-i>
+      <c-i v="0 square"></c-i>
+      <c-i v="0 square-duo"></c-i>
+      <c-i v="0 square-fill"></c-i>
+    </div>
+
+    <div class="demo">
+      <c-i v="alert circle"></c-i>
+      <c-i v="alert circle-duo"></c-i>
+      <c-i v="alert circle-fill"></c-i>
+      <c-i v="alert circle-duo-fill"></c-i>
+      <c-i v="0 circle"></c-i>
+      <c-i v="0 circle-duo"></c-i>
+      <c-i v="0 circle-fill"></c-i>
+    </div>
+
+    <div class="demo">
+      <c-i v="alert triangle"></c-i>
+      <c-i v="alert triangle-duo"></c-i>
+      <c-i v="alert triangle-fill"></c-i>
+      <c-i v="alert triangle-duo-fill"></c-i>
+      <c-i v="0 triangle"></c-i>
+      <c-i v="0 triangle-duo"></c-i>
+      <c-i v="0 triangle-fill"></c-i>
+    </div>
+
+    <div class="demo">
+      <c-i v="alert shield"></c-i>
+      <c-i v="alert shield-duo"></c-i>
+      <c-i v="alert shield-fill"></c-i>
+      <c-i v="alert shield-duo-fill"></c-i>
+      <c-i v="0 shield"></c-i>
+      <c-i v="0 shield-duo"></c-i>
+      <c-i v="0 shield-fill"></c-i>
+    </div>
+
+    <div class="demo">
+      <c-i v="alert badge"></c-i>
+      <c-i v="alert badge-duo"></c-i>
+      <c-i v="alert badge-fill"></c-i>
+      <c-i v="alert badge-duo-fill"></c-i>
+      <c-i v="0 badge"></c-i>
+      <c-i v="0 badge-duo"></c-i>
+      <c-i v="0 badge-fill"></c-i>
+    </div>
+
+    <div class="demo">
+      <c-i v="alert file"></c-i>
+      <c-i v="alert file-duo"></c-i>
+      <c-i v="alert file-fill"></c-i>
+      <c-i v="alert file-duo-fill"></c-i>
+      <c-i v="0 file"></c-i>
+      <c-i v="0 file-duo"></c-i>
+      <c-i v="0 file-fill"></c-i>
+    </div>
+
+    <div class="demo dark">
+      <c-i v="alert square"></c-i>
+      <c-i v="alert square-duo"></c-i>
+      <c-i v="alert square-fill"></c-i>
+      <c-i v="0 square"></c-i>
+      <c-i v="0 square-duo"></c-i>
+      <c-i v="0 square-fill"></c-i>
+    </div>
+
+    <div class="demo big">
+      <c-i v="alert square"></c-i>
+      <c-i v="alert square-duo"></c-i>
+      <c-i v="alert square-fill"></c-i>
+      <c-i v="0 square"></c-i>
+      <c-i v="0 square-duo"></c-i>
+      <c-i v="0 square-fill"></c-i>
+      <c-i v="alert triangle"></c-i>
+      <c-i v="alert triangle-duo"></c-i>
+      <c-i v="alert triangle-fill"></c-i>
+      <c-i v="0 triangle"></c-i>
+      <c-i v="0 triangle-duo"></c-i>
+      <c-i v="0 triangle-fill"></c-i>
+    </div>
+
+    <div class="demo dark big">
+      <c-i v="alert square"></c-i>
+      <c-i v="alert square-duo"></c-i>
+      <c-i v="alert square-fill"></c-i>
+      <c-i v="0 square"></c-i>
+      <c-i v="0 square-duo"></c-i>
+      <c-i v="0 square-fill"></c-i>
+    </div>
+
+    <div class="demo red big">
+      <c-i v="alert square"></c-i>
+      <c-i v="alert square-duo"></c-i>
+      <c-i v="alert square-fill"></c-i>
+      <c-i v="0 square"></c-i>
+      <c-i v="0 square-duo"></c-i>
+      <c-i v="0 square-fill"></c-i>
+    </div>
+
+    <div class="flex">
+      <button><span>Regular</span></button>
+      <button><c-i v="alert square"></c-i> <span>Alert</span></button>
+      <button><c-i v="alert square-fill"></c-i> <span>Alert</span></button>
+      <button><c-i v="alert square-duo"></c-i> <span>Alert</span></button>
+      <button><c-i v="alert square-fill-duo"></c-i> <span>Alert</span></button>
+      <button class="dark"><c-i v="alert square"></c-i> <span>Alert</span></button>
+    </div>
+    <div class="flex">
+      <button class="big"><c-i v="alert square"></c-i> <span>Big Alert</span></button>
+      <button class="big">Big regular</button>
+    </div>
+  </main>
+  <footer>
+    If you like this, <a href="https://github.com/lekoala/composable-icon">give a star <l-i name="star" set="em"></l-i></a>
+    <hr />
+    Made with <l-i name="heart" set="em"></l-i> in <l-i name="be" set="fl"></l-i> by <a href="https://www.lekoala.be">LeKoala</a>
+  </footer>
+</body>
+
+</html>

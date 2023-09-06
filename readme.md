@@ -32,5 +32,7 @@ See `demo.html` or the following pen https://codepen.io/lekoalabe/pen/RwEREoG
 
 ## Credits
 
-Base icons styles: https://tabler-icons.io/
+Base icons styles: https://icons.getbootstrap.com/
+Inspiration for addons: https://tabler-icons.io/
+Base list of icons: https://www.s-ings.com/projects/microns-icon-font/
 Duotone inspiration: https://phosphoricons.com/

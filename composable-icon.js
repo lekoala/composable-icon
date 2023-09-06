@@ -1,5 +1,8 @@
 import data from "./src/data.js";
 
+const ICON_SIZE = 16;
+const FILL_CURR = 'fill="currentColor"';
+
 /**
  * Wrap icon in svg
  * @link https://stackoverflow.com/questions/18467982/are-svg-parameters-such-as-xmlns-and-version-needed
@@ -8,28 +11,33 @@ import data from "./src/data.js";
  * @returns {string}
  */
 function wrap(svg, styles = "") {
-  return `<svg viewBox="0 0 24 24" stroke-width="${options.strokeWidth}" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="${styles}">${svg}</svg>`;
+  return `<svg viewBox="0 0 16 16" ${FILL_CURR} style="${styles}">${svg}</svg>`;
 }
 
 /**
  * Create paths based on definitions
- * vector-effect="non-scaling-stroke" is required to avoid stroke changing when scaling
  * @param {string} d
+ * @param {string} attrs
  * @returns {string}
  */
-function path(d) {
+function path(d, attrs = "") {
+  // let s = 'vector-effect="non-scaling-stroke"';
+  let s = "";
+  if (attrs) {
+    s += " " + attrs;
+  }
   return d
     .split("|")
     .map((d) => {
-      // It's a circle
-      if (d.indexOf('cx="') === 0) {
-        return `<circle ${d} fill="currentColor" vector-effect="non-scaling-stroke" />`;
+      // It's a shape
+      if (d.includes("cx")) {
+        return `<circle ${d} ${s} />`;
       }
       const isDuotone = d.includes("*");
       if (isDuotone) {
         d = d.replace("*", "");
       }
-      const p = `<path d="${d}" vector-effect="non-scaling-stroke"></path>`;
+      const p = `<path d="${d}" ${s} />`;
       if (options.duotone && isDuotone) {
         return `${p}${duotone(d)}`;
       }
@@ -44,7 +52,36 @@ function path(d) {
  * @returns {string}
  */
 function duotone(d) {
-  return `<path d="${d}" opacity="0.2" fill="currentColor" stroke="none"></path>`;
+  return `<path d="${d}" opacity="0.2" fill="currentColor"></path>`;
+}
+
+/**
+ * Substract icon from path
+ * @param {string} shapeSvg
+ * @param {string} svg
+ * @param {string} icon
+ * @param {Boolean} duotone
+ * @returns {string}
+ */
+function fill(shapePath, svg, icon, duotone = false) {
+  let name = `ci-fill-${icon}`;
+
+  // Black => to remove, white => to keep
+  if (duotone) {
+    name += "-duo";
+    maskSvg = `<mask id="${name}">
+    <rect x="0" y="0" width="${ICON_SIZE}" height="${ICON_SIZE}" fill="white" stroke-width="0" opacity="0.7" />
+    <rect x="0" y="0" width="${ICON_SIZE}" height="${ICON_SIZE}" fill="none" stroke="white" stroke-width="2" />
+    ${svg}
+  </mask>`;
+  } else {
+    maskSvg = `<mask id="${name}">
+    <rect x="0" y="0" width="${ICON_SIZE}" height="${ICON_SIZE}" fill="white" stroke-width="0" />
+    ${svg}
+  </mask>`;
+  }
+  const shapeSvg = path(shapePath);
+  return `<defs>${maskSvg}</defs><g style="mask: url(#${name})">${shapeSvg}</g>`;
 }
 
 /**
@@ -54,62 +91,38 @@ function duotone(d) {
  * @returns
  */
 function addonMask(svg, addon) {
-  // A circle corner
-  let mask = "addonMaskBr";
-  let maskSvg = `<mask id="ci-addonMaskBr">
-  <path fill="white" d="M12,24"/>
-  <path fill="white" d="M24,12"/>
-  <path fill="white" d="M24,12V0H0V24H12v-.06A12,12,0,0,1,24,12Z"/>
-</mask>`;
-
-  largeAddon = ["star", "heart", "time", "stats"].includes(addon);
-  if (largeAddon) {
-    // A rounded rectangle corner
-    mask = "addonMaskBrLarge";
-    maskSvg = `<mask id="ci-addonMaskBrLarge">
-    <path fill="white" d="M12,18c0-3.31,2.69-6,6-6h6V0H0v24h12"/>
-    </mask>`;
-  } else if (addon == "off") {
-    const w = options.strokeWidth * 1.5;
-    const fw = 24 - w;
-    // This mask add some white space around the bar
-    mask = "addonMaskOff";
-    maskSvg = `<mask id="ci-addonMaskOff">
-    <polygon fill="white" points="24,${fw} 24,0 ${w},0"/>
-    <polygon fill="white" points="0,${w} 0,24 ${fw},24"/>
-</mask>`;
-  }
+  let maskSvg;
   const addonSvg = path(data.addons[addon]);
-  return `<defs>${maskSvg}</defs><g style="mask: url(#ci-${mask})">${svg}</g>
+  if (addon == "off") {
+    const w = 2;
+    const fw = ICON_SIZE - w;
+    // This mask add some white space around the bar
+    maskSvg = `<mask id="ci-mask-${addon}">
+    <polygon fill="white" points="${ICON_SIZE},${fw} ${ICON_SIZE},0 ${w},0"/>
+    <polygon fill="white" points="0,${w} 0,${ICON_SIZE} ${fw},${ICON_SIZE}"/>
+</mask>`;
+  } else {
+    // Black => to remove, white => to keep
+    maskSvg = `<mask id="ci-mask-${addon}">
+    <rect x="0" y="0" width="${ICON_SIZE}" height="${ICON_SIZE}" fill="white"/>
+    <rect width="10" height="10" x="7.5" y="7.5" rx="4" fill="black" />
+  </mask>`;
+  }
+  return `<defs>${maskSvg}</defs><g style="mask: url(#ci-mask-${addon})">${svg}</g>
 ${addonSvg}`;
 }
 
 /**
  * Add some text to the icon
  * @param {string} t
- * @param {string} icon
  * @returns {string}
  */
-function text(t, icon) {
-  // Center by default
-  let pos = "12,13";
-  let s = 10;
-
-  // Need specific positioning
-  const offset = data.offsets[icon];
-  if (offset) {
-    pos = offset.split("|")[0];
-    s = offset.split("|")[1] || 6;
-  }
-
-  // This may need some finetuning...
-  fw = "normal";
-  // Bold small signs
-  if (["+", "-", ":", "/"].includes(t)) {
-    fw = "bold";
-  }
-  sw = options.strokeWidth * 0.5;
-  return `<g transform="translate(${pos})"><text x="0" y="0" style="font-size:${s}px;font-weight:${fw};font-family:system-ui,sans-serif;" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke-width="${sw}">${t}</text></g>`;
+function text(t, bottom = false) {
+  const x = ICON_SIZE / 2;
+  const y = bottom ? ICON_SIZE - 2 : ICON_SIZE / 2 + 1;
+  const size = t.length >= 3 || bottom ? 6 : t.length == 2 ? 8 : 10;
+  const s = `font-size:${size}px;font-weight:bold;font-family:system-ui,sans-serif;`;
+  return `<text x="${x}" y="${y}" style="${s}" text-anchor="middle" dominant-baseline="middle">${t}</text>`;
 }
 
 const options = {
@@ -129,26 +142,43 @@ class ComposableIcon extends HTMLElement {
   load() {
     let v = this.getAttribute("v");
     let t = this.getAttribute("t");
+    let size = this.getAttribute("size");
+    if (size) {
+      this.style.setProperty("--ci-size", `${size}px`);
+    }
 
     let svg = "";
 
     let icon,
-      frame,
+      shape,
       addon,
       rotationOrAddon = null;
 
     // syntax:
-    // <c-i v="{icon}(_{text})(-{addonOrRotation})( {frame})( {addon})" t="{text}"></c-i>
+    // <c-i v="{icon}(_{text})(-{addonOrRotation})( {shape_{text}})( {addon})" t="{text}"></c-i>
 
     // First, split by space
-    [icon, frame, addon] = v.split(" ");
+    [icon, shape, addon] = v.split(" ");
 
-    // It has a built in addon or rotation
-    if (icon.includes("-")) {
-      [icon, rotationOrAddon] = icon.split("-");
+    const [iconName, ...rest] = icon.split(/-|_/);
+
+    // Maybe we skipped the icon?
+    if (icon && data.shapes[iconName]) {
+      addon = shape;
+      shape = icon;
+      icon = "";
     }
 
-    // It has some text
+    // It has a built in addon or rotation
+    let iconFill = false;
+    if (icon.includes("-")) {
+      [icon, ...rotationOrAddon] = icon.split("-");
+      iconFill = rotationOrAddon.includes("fill");
+      rotationOrAddon = rotationOrAddon.filter((item) => item !== "fill");
+      rotationOrAddon = rotationOrAddon[0] || null;
+    }
+
+    // It has some text or simply use _ as placeholder
     if (icon.includes("_")) {
       const textParts = icon.split("_");
       if (textParts[1] != "") {
@@ -159,41 +189,59 @@ class ComposableIcon extends HTMLElement {
         icon = null;
       }
     }
+    if (shape && shape.includes("_")) {
+      [shape, t] = shape.split("_");
+    }
 
     if (icon) {
       icon = data.aliases[icon] || icon;
-      const dataIcon = data.icons[icon];
-      if (dataIcon) {
+      if (data.icons[icon]) {
+        const dataIcon = data.icons[icon][iconFill ? 1 : 0];
         svg = path(dataIcon);
       } else {
         t = icon; // use a text
       }
     }
 
-    if (frame) {
-      const isDuotone = frame.includes("-duo");
-      if (isDuotone) {
-        frame = frame.replace("-duo", "");
-      }
-      const isMonotone = frame.includes("-mono");
-      if (isMonotone) {
-        frame = frame.replace("-mono", "");
-      }
-      const frameSvg = data.frames[frame];
-      // Scales icons that do not fit will
-      const scaled = ["alert"];
-      if (!scaled.includes(icon)) {
-        svg = `<g transform="scale(0.6)" transform-origin="50% 50%">${svg}</g>`;
-      }
-      svg += path(frameSvg);
-      if (!isMonotone && (options.duotone || isDuotone)) {
-        svg += duotone(frameSvg);
+    // Text is always above addons
+
+    if (t) {
+      const textBottom = shape && shape.includes("file") && t.length > 1;
+      svg += text(t, textBottom);
+      if (textBottom) {
+        shape = "fileCut";
       }
     }
 
-    // Text is always above addons
-    if (t) {
-      svg += text(t, icon);
+    if (shape) {
+      const [shapeName, ...shapeOpt] = shape.split("-");
+      const shapeDuo = shapeOpt.includes("duo");
+      const shapeFill = shapeOpt.includes("fill");
+      if (!data.shapes[shapeName]) {
+        console.error(`Undefined shape ${shapeName}`);
+        return;
+      }
+      const shapePath = data.shapes[shapeName][shapeFill ? 1 : 0];
+      const [shapeOffset, scalePercentage] = (data.offsets[shapeName] || "").split("|");
+      const defaultScale = data.scales[icon] || 1;
+      if (shapeOffset || icon) {
+        svg = `<g transform="translate(${shapeOffset || "0,0"}) scale(${
+          scalePercentage || defaultScale
+        })" transform-origin="50% 50%">${svg}</g>`;
+      }
+
+      if (shapeFill) {
+        // For fill, let's inverse the icon by using it as a mask
+        // We need a unique name for the mask that depends on the icon
+        svg = fill(shapePath, svg, shapeName + icon, shapeDuo);
+      } else {
+        // Add the shape
+        // We need a unique name for the mask that depends on the shape
+        svg += path(shapePath);
+        if (shapeDuo && data.shapes[shapeName][1]) {
+          svg += path(data.shapes[shapeName][1], `opacity="0.2"`);
+        }
+      }
     }
 
     // Do we have an addon as a third arg?
@@ -225,10 +273,11 @@ class ComposableIcon extends HTMLElement {
           };
           rv = map[rotationOrAddon] || 0;
         }
-        styles.push(`transform: rotate(${rv}deg)`);
+        styles.push(`transform: rotate(${rv}deg); transform-origin: center`);
       }
     }
 
+    // We need to compute the stroke width since we prevent it from scaling
     this.innerHTML = wrap(svg, styles.join(";"));
   }
 

@@ -1,87 +1,247 @@
 <?php
 
 $dir = dirname(__DIR__);
-$icons = glob($dir . "/icons/*.svg");
-$c = count($icons);
+$svgFiles = glob($dir . "/icons/*.svg");
+$c = count($svgFiles);
 echo "processing $c icons\n";
 
-$ignore = [
-    'off', 'letter',
-    'bolt', 'cancel', 'check', 'code', 'cog',
-    'discount', 'dollar', 'down', 'exclamation', 'heart', 'minus',
-    'pause', 'pin', 'plus',
-    'question', 'search', 'share', 'star', 'x',
-    'repeat', 'stats', 'time', 'add'
-];
-foreach (range(0, 100) as $i) {
-    $ignore[] = $i;
-    $ignore[] = $i . "x";
-    $ignore[] = "f" . $i;
-}
-foreach (range('a', 'z') as $i) {
-    $ignore[] = $i;
-}
+$generateShapes = false;
+$generateIcons = true;
 
-$ignoredIcons = [
-    '123',
+$noFill = [
+    'journal', 'files', 'dotCircle', 'dotSquare'
 ];
-
-$onlyIcons = [
-    // Done manually
-    // 'alert',
-    'accessible',
-    'activity',
-    'address-book',
-    'adjustments',
-    'affiliate',
-    'align-center',
-    'align-justified',
-    'align-left',
-    'align-right',
-    'analyze',
-    'api-app',
-    'apps',
-    'archive',
-    'armchair',
-    'arrow-bar-up',
-    'arrow-bar-to-up',
-    // 'arrow-up-bar',
-    'arrow-badge-up',
-    'arrow-back',
-    'arrow-big-up',
-    'arrow-big-up-line',
-    // 'arrow-curve-left',
-    'arrow-forward-up',
-    'arrow-up',
-    'arrows-horizontal',
-    'arrows-diff',
-    'arrows-move-vertical',
-    'arrows-up-down',
-    'article',
-    'asterisk', // et périls
-    'at',
-    'award',
-    'badge',
-    'badges',
-    'ban',
-    'barcode',
-    'chevron-compact-up',
-    'chevron-up',
-    'chevrons-up',
-    // 'arrow-move-up',
-    'basket',
+$shapes = [
+    'circle',
+    'square',
+    // 'badge', // do manually
+    // 'backspace',
+    'bag',
     'bell',
-    'caret-up',
-    'exclamation-mark',
-    // We have our own duotoned version of this
-    // 'calendar',
-    'star',
+    'bookmark',
+    'bookmarks',
+    'box2', // will be renamed "box"
+    'bucket',
+    'calendar',
+    'cart',
+    'chat',
+    'chat-left',
+    'chat-right',
+    'chat-square',
+    'clipboard',
+    'cloud',
+    'collection',
+    'cup',
+    'diamond',
+    'display',
+    // 'droplet', // manually
+    'egg',
+    'file',
+    'file-earmark',
+    'files', // no files-fill ?
+    'folder',
+    'heart',
+    'heptagon',
+    'hexagon',
+    'house',
+    'houses',
+    'journal', // no journal-fill?
+    'octagon',
+    // 'patch',
+    'pentagon',
+    // 'postage',
+    'shield',
+    'triangle',
 ];
 
-$duotoned = [
-    'M10 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0',
-    'M18,5H6C4.9,5,4,5.9,4,7v4h16V7C20,5.9,19.1,5,18,5z',
-    'M12 13m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0',
+$icons = [
+    'activity',
+    'airplane',
+    'alarm',
+    'align-center',
+    'align-top', // => align-side
+    'alt',
+    'archive',
+    'arrow-90deg-up',
+    'arrow-bar-up',
+    'arrow-up',
+    'arrow-clockwise',
+    'arrow-counterclockwise',
+    'arrow-down-up',
+    'arrow-repeat',
+    'arrows-collapse',
+    'arrows-expand',
+    'arrows-fullscreen',
+    'arrows-move',
+    'aspect-ratio',
+    'asterisk',
+    'award',
+    // 'back',
+    'ballon',
+    'bandaid',
+    'bank',
+    'bell',
+    'bicycle',
+    'binoculars',
+    'blockquote-left',
+    'blockquote-right',
+    'body-text',
+    'book',
+    'book-half',
+    'bookshelf',
+    'box',
+    'box-arrow-up',
+    'box-arrow-in-up',
+    'boxes',
+    'braces',
+    'braces-asterisk',
+    'briefcase',
+    'brightness-high',
+    'broadcast',
+    'brush',
+    'bug',
+    'building',
+    'buildings',
+    'camera',
+    'camera-video',
+    'capslock',
+    'capsule',
+    'card-checklist',
+    'card-heading',
+    'card-image',
+    'card-list',
+    'card-text',
+    'cash',
+    'cast',
+    'chevron-bar-contract',
+    'chevron-bar-expand',
+    'chevron-bar-up',
+    'chevron-up',
+    'chevron-compact-up',
+    'chevron-contract',
+    'chevron-expand',
+    'chevron-double-up',
+    'circle-half',
+    'clock',
+    'clock-history',
+    'code',
+    'code-slash',
+    'coin',
+    'command',
+    'compass',
+    'cone',
+    'credit-card',
+    'dash',
+    'database',
+    'download',
+    'envelope',
+    'envelope-open',
+    'eraser',
+    'escape',
+    // 'exclamation',
+    'eye',
+    'eyeglasses',
+    'fan',
+    'fast-forward',
+    'heart',
+    'file-earmark-image',
+    'filter',
+    'film',
+    'filter-left',
+    'filter-right',
+    'fingerprint',
+    'fire',
+    'flag',
+    'fonts',
+    'forward',
+    // 'front',
+    'fullscreen',
+    'fullscreen-exit',
+    'funnel',
+    'gear',
+    'gem',
+    'geo-alt',
+    'gift',
+    'globe',
+    'graph-down',
+    'graph-up',
+    'grid',
+    'hammer',
+    'hand-index',
+    'hand-index-thumb',
+    'hand-thumbs-up',
+    'hash',
+    'hdd',
+    'hourglass',
+    'image',
+    'images',
+    'inbox',
+    'inboxes',
+    'incognito',
+    'infinity',
+    'info',
+    'key',
+    'layers',
+    'person',
+    'lightbulb',
+    'lighting',
+    'link',
+    'list',
+    'list-check',
+    'lock',
+    'magic',
+    'map',
+    'mic',
+    'moon',
+    'music-note',
+    'nut',
+    'paperclip',
+    'pass',
+    'pause',
+    'play',
+    'pencil',
+    'phone',
+    'pin',
+    'piggy-bank',
+    'plug',
+    'power',
+    'question',
+    'radioactive',
+    'recycle',
+    'rewind',
+    'rocket',
+    'rocket-takeoff',
+    'rss',
+    'save',
+    'send',
+    'share',
+    'shift',
+    'shuffle',
+    'sliders',
+    'star',
+    'stars',
+    'stickies',
+    'sticky',
+    'stopwatch',
+    'tablet',
+    'tag',
+    'tags',
+    'telephone',
+    'terminal',
+    'three-dots',
+    'trash',
+    'tree',
+    'trophy',
+    'truck',
+    'tv',
+    'unlock',
+    'upload',
+    'virus',
+    'window',
+    'x-diamond',
+    'zoom-in',
+    'zoom-out',
+    // 'caret-up', // triangles are hard to center without tweaks
 ];
 
 function camelCase($string, $dontStrip = [])
@@ -89,115 +249,138 @@ function camelCase($string, $dontStrip = [])
     return lcfirst(str_replace(' ', '', ucwords(preg_replace('/[^a-z0-9' . implode('', $dontStrip) . ']+/', ' ', $string))));
 }
 
-$dic = [];
-$dupl = [];
-$compressedIcons = [];
+if ($generateIcons) {
+    echo "Generating icons\n";
+    $iconsData = [];
+    $data = '';
+    $data .= "const generatedIcons = {";
+    foreach ($svgFiles as $icon) {
+        $found = false;
+        $filename = pathinfo($icon, PATHINFO_FILENAME);
 
-$data = '';
-$data .= "const generatedIcons = {";
-foreach ($icons as $icon) {
-    $found = false;
-    $filename = pathinfo($icon, PATHINFO_FILENAME);
-
-    if (in_array($filename, $ignoredIcons)) {
-        continue;
-    }
-
-    if (empty($onlyIcons)) {
-        $parts = explode("-", $filename);
-        array_shift($parts);
-        foreach ($parts as $part) {
-            if (in_array($part, $ignore)) {
-                $found = true;
-            }
-        }
-        if ($found) {
+        if (!in_array($filename, $icons)) {
             continue;
         }
-    }
 
+        $filename = str_replace('-down-up', '-exchange', $filename);
+        $filename = str_replace('-up', '', $filename);
+        $filename = str_replace('-top', '-side', $filename);
 
+        $camel = camelCase($filename);
 
-    if (!empty($onlyIcons) && !in_array($filename, $onlyIcons)) {
-        continue;
-    }
+        // echo "processing $icon\n";
 
-    $filename = str_replace('/-up-down/', '-bi', $filename);
-    $filename = preg_replace('/-up$/', '', $filename);
-    $filename = preg_replace('/-left$/', '', $filename);
-    $filename = preg_replace('/-vertical$/', '', $filename);
+        $content = file_get_contents($icon);
 
-    $camel = camelCase($filename);
+        preg_match_all('/d="(.*?)"/', $content, $matches);
+        preg_match_all('/cx="(.*?)" cy="(.*?)" r="(.*?)"/', $content, $circles);
 
-    $camel = str_replace('12', 'twelve', $camel);
-    $camel = str_replace('24', 'twentyFour', $camel);
-    $camel = str_replace('2', 'two', $camel);
-    $camel = str_replace('360', 'threeSixty', $camel);
-    $camel = str_replace('3', 'three', $camel);
+        $pathsMatches = $matches[1];
+        foreach ($circles[0] as $circle) {
+            $pathsMatches[] = $circle;
+        }
 
-    echo "processing $icon\n";
+        $paths = implode('|', $pathsMatches);
 
-    $content = file_get_contents($icon);
+        $iconsData[$camel] = $pathsMatches;
 
-    //     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-tidal" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    //     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-    //     <path d="M5.333 6l3.334 3.25l3.333 -3.25l3.333 3.25l3.334 -3.25l3.333 3.25l-3.333 3.25l-3.334 -3.25l-3.333 3.25l3.333 3.25l-3.333 3.25l-3.333 -3.25l3.333 -3.25l-3.333 -3.25l-3.334 3.25l-3.333 -3.25z"></path>
-    //  </svg>
+        // Is there a fill ?
+        $fillIcon = str_replace('.svg', '-fill.svg', $icon);
+        if (is_file($fillIcon)) {
+            $fillContent = file_get_contents($fillIcon);
 
+            preg_match_all('/d="(.*?)"/', $fillContent, $matches);
+            preg_match_all('/cx="(.*?)" cy="(.*?)" r="(.*?)"/', $fillContent, $circles);
 
-    $content = str_replace('d="M0 0h24v24H0z"', '', $content);
-    preg_match_all('/d="(.*?)"/', $content, $matches);
-    preg_match_all('/cx="(.*?)" cy="(.*?)" r="(.*?)"/', $content, $circles);
+            $pathsMatches = $matches[1];
+            foreach ($circles[0] as $circle) {
+                $pathsMatches[] = $circle;
+            }
 
-    $pathsMatches = $matches[1];
-    foreach ($pathsMatches as $pm) {
-        // It's a duplicated path
-        if (in_array($pm, $dic)) {
-            $dupl[] = $pm;
+            $fillPaths = implode('|', $pathsMatches);
+            $data .= "\n  $camel: [`$paths`, `$fillPaths`],";
         } else {
-            $dic[] = $pm;
+            $data .= "\n  $camel: [`$paths`],";
         }
     }
 
-    foreach ($pathsMatches as $idx => $pm) {
-        if (in_array($pm, $duotoned)) {
-            $pathsMatches[$idx] = "*$pm";
-        }
-    }
-    foreach ($circles[0] as $circle) {
-        $pathsMatches[] = $circle;
+    $data .= "\n};\nexport default generatedIcons;\n";
+    echo "Available icons: " . implode(", ", array_keys($iconsData)) . "\n";
+    foreach ($iconsData as $k => $v) {
+        echo "<c-i v=\"$k\"></c-i>\n";
     }
 
-    $paths = implode('|', $pathsMatches);
-
-    $data .= "\n  $camel: `$paths`,";
-    $compressedIcons[$camel] = $pathsMatches;
+    file_put_contents($dir . "/src/icons.js", $data);
 }
+if ($generateShapes) {
+    echo "Generating shapes\n";
+    $data = '';
+    $shapesData = [];
+    $data .= "const generatedShapes = {";
+    foreach ($svgFiles as $icon) {
+        $found = false;
+        $filename = pathinfo($icon, PATHINFO_FILENAME);
 
-// $dupl = array_unique($dupl);
-// $replacedKeys = [];
-// $data = "";
-// $data = "const dic = {";
-// foreach ($dupl as $idx => $d) {
-//     $data .= "\n'$idx': `$d`,";
-// }
-// $data .= "\n};\n";
+        $isFill = str_contains($filename, '-fill');
+        $testName = str_replace('-fill', '', $filename);
 
-// $data .= "const generatedIcons = {";
-// foreach ($compressedIcons as $camel => $pathsMatches) {
-//     $compressedPaths = [];
-//     foreach ($pathsMatches as $pm) {
-//         $idx = array_search($pm, $dupl);
-//         if ($idx !== false) {
-//             $compressedPaths[] = '${d[' . $idx . ']}';
-//         } else {
-//             $compressedPaths[] = $pm;
-//         }
-//     }
-//     $paths = implode('|', $compressedPaths);
-//     $data .= "\n$camel: `$paths`,";
-// }
+        if (!in_array($testName, $shapes)) {
+            continue;
+        }
 
-$data .= "\n};\nexport default generatedIcons;\n";
+        $camel = camelCase($testName);
+        $camel = str_replace('2', '', $camel);
 
-file_put_contents($dir . "/src/icons.js", $data);
+        // echo "processing shape $icon\n";
+
+        $content = file_get_contents($icon);
+
+        preg_match_all('/d="(.*?)"/', $content, $matches);
+        preg_match_all('/cx="(.*?)" cy="(.*?)" r="(.*?)"/', $content, $circles);
+
+        $pathsMatches = $matches[1];
+        foreach ($circles[0] as $circle) {
+            $pathsMatches[] = $circle;
+        }
+
+        $paths = implode('|', $pathsMatches);
+
+        $idx = $isFill ? 1 : 0;
+        $shapesData[$camel][$idx] = $paths;
+        // $data .= "\n  $camel: `$paths`,";
+    }
+    foreach ($shapesData as $name => $values) {
+        if (count($values) == 2) {
+            $data .= "\n  $name: [\n`$values[0]`,\n`$values[1]`\n],";
+        } else if (count($values) == 1) {
+            $data .= "\n  $name: [\n`$values[0]`\n],";
+        }
+    }
+    $data .= "\n};\nexport default generatedShapes;\n";
+
+    $extraShapes = [
+        'badge',
+        'backspace',
+        'droplet',
+        'patch',
+        'dotCircle',
+        'dotSquare',
+        'sd',
+        'sign',
+    ];
+
+    $allShapes = array_merge(array_keys($shapesData), $extraShapes);
+    echo "Available shapes: " . implode(", ", $allShapes) . "\n";
+    foreach ($allShapes as $k) {
+        echo "<c-i v=\"alert $k\"></c-i>\n";
+        echo "<c-i v=\"check $k\"></c-i>\n";
+        echo "<c-i v=\"x $k\"></c-i>\n";
+        if (!in_array($k, $noFill)) {
+            echo "<c-i v=\"alert $k-fill\"></c-i>\n";
+            echo "<c-i v=\"check $k-fill\"></c-i>\n";
+            echo "<c-i v=\"x $k-fill\"></c-i>\n";
+        }
+    }
+
+    file_put_contents($dir . "/src/shapes.js", $data);
+}
